@@ -2,6 +2,7 @@
 import React from 'react';
 import { Package, TrendingUp, DollarSign, Users, Plus, Edit3, Trash2, CheckCircle, ShieldAlert, BarChart3, ArrowUpRight, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function SellerDashboard() {
   return (
@@ -55,7 +56,9 @@ export default function SellerDashboard() {
               <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest block mb-1">Commission</span>
               <span className="text-2xl font-black text-white">2.5%</span>
            </div>
-           <button className="text-[10px] font-black text-cyber-green uppercase tracking-[0.2em] bg-cyber-green/10 px-6 py-3 rounded-xl border border-cyber-green/20 hover:bg-cyber-green hover:text-white transition-all">Benefits</button>
+           <Link href="/verify">
+             <button className="text-[10px] font-black text-cyber-green uppercase tracking-[0.2em] bg-cyber-green/10 px-6 py-3 rounded-xl border border-cyber-green/20 hover:bg-cyber-green hover:text-white transition-all">Benefits</button>
+           </Link>
         </div>
       </motion.div>
 
@@ -101,18 +104,18 @@ export default function SellerDashboard() {
               <div className="flex items-center gap-4">
                 <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Sort: Latest</span>
                 <div className="w-1 h-1 rounded-full bg-gray-700" />
-                <button className="text-[10px] font-black text-cyber-cyan uppercase tracking-widest hover:underline">View All</button>
+                <Link href="/search" className="text-[10px] font-black text-cyber-cyan uppercase tracking-widest hover:underline">View All</Link>
               </div>
            </div>
 
            <div className="space-y-4">
              {[
-               { name: 'Premium SEO Master Toolset v4.2', price: 89.99, sales: 128, status: 'Active' },
-               { name: 'Enterprise Automation Suite (Source)', price: 499.00, sales: 12, status: 'Active' },
-               { name: 'Aged Social Media Bundle (2015+)', price: 250.00, sales: 45, status: 'Pending' },
+               { id: '1', name: 'Premium SEO Master Toolset v4.2', price: 89.99, sales: 128, status: 'Active' },
+               { id: '3', name: 'Enterprise Automation Suite (Source)', price: 499.00, sales: 12, status: 'Active' },
+               { id: '5', name: 'Aged Social Media Bundle (2015+)', price: 250.00, sales: 45, status: 'Pending' },
              ].map((product, i) => (
                <motion.div
-                 key={i}
+                 key={product.id}
                  initial={{ opacity: 0, x: -20 }}
                  animate={{ opacity: 1, x: 0 }}
                  transition={{ delay: 0.1 * i + 0.6 }}
@@ -124,7 +127,9 @@ export default function SellerDashboard() {
                      </div>
                      <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                           <h4 className="font-bold text-white text-lg group-hover:text-cyber-cyan transition-colors">{product.name}</h4>
+                           <Link href={`/product/${product.id}`}>
+                             <h4 className="font-bold text-white text-lg group-hover:text-cyber-cyan transition-colors">{product.name}</h4>
+                           </Link>
                            <span className={`text-[8px] font-black uppercase px-2.5 py-1 rounded-full border ${product.status === 'Active' ? 'bg-cyber-green/10 text-cyber-green border-cyber-green/20' : 'bg-cyber-amber/10 text-cyber-amber border-cyber-amber/20'}`}>
                               {product.status}
                            </span>

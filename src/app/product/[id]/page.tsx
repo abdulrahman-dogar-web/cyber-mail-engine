@@ -2,6 +2,7 @@
 import React from 'react';
 import { ShieldCheck, Zap, MessageSquare, Clock, Info, Star, ChevronRight, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function ProductDetail() {
   return (
@@ -16,9 +17,9 @@ export default function ProductDetail() {
         animate={{ y: 0, opacity: 1 }}
         className="flex items-center gap-3 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]"
       >
-        <span className="hover:text-cyber-cyan cursor-pointer transition-colors">Marketplace</span>
+        <Link href="/" className="hover:text-cyber-cyan cursor-pointer transition-colors">Marketplace</Link>
         <ChevronRight className="w-3 h-3 text-gray-700" />
-        <span className="hover:text-cyber-cyan cursor-pointer transition-colors">Software</span>
+        <Link href="/search" className="hover:text-cyber-cyan cursor-pointer transition-colors">Software</Link>
         <ChevronRight className="w-3 h-3 text-cyber-cyan" />
         <span className="text-white">Premium SEO Master Toolset</span>
       </motion.div>
@@ -146,26 +147,34 @@ export default function ProductDetail() {
             </div>
 
             <div className="space-y-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-white py-6 rounded-[1.5rem] font-black text-xl shadow-xl shadow-cyber-cyan/20 hover:shadow-cyber-cyan/40 transition-all flex items-center justify-center gap-4"
-              >
-                <ShieldCheck className="w-7 h-7" />
-                Buy with Escrow
-              </motion.button>
-              <button className="w-full bg-white/5 hover:bg-white/10 text-white py-5 rounded-[1.5rem] font-bold transition-all border border-white/10 flex items-center justify-center gap-3">
-                <MessageSquare className="w-5 h-5 text-gray-500" />
-                Inquiry for Seller
-              </button>
+              <Link href="/chat/1" className="block w-full">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-white py-6 rounded-[1.5rem] font-black text-xl shadow-xl shadow-cyber-cyan/20 hover:shadow-cyber-cyan/40 transition-all flex items-center justify-center gap-4"
+                >
+                  <ShieldCheck className="w-7 h-7" />
+                  Buy with Escrow
+                </motion.button>
+              </Link>
+              <Link href="/chat/1" className="block w-full">
+                <button className="w-full bg-white/5 hover:bg-white/10 text-white py-5 rounded-[1.5rem] font-bold transition-all border border-white/10 flex items-center justify-center gap-3">
+                  <MessageSquare className="w-5 h-5 text-gray-400" />
+                  Inquiry for Seller
+                </button>
+              </Link>
             </div>
 
             <div className="pt-10 border-t border-white/5 space-y-8">
               <div className="flex items-center gap-5">
-                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-cyber-cyan/20 to-cyber-purple/20 flex items-center justify-center text-2xl text-white font-black shadow-inner">T</div>
+                <Link href="/seller/1">
+                  <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-cyber-cyan/20 to-cyber-purple/20 flex items-center justify-center text-2xl text-white font-black shadow-inner cursor-pointer hover:scale-105 transition-transform">T</div>
+                </Link>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-lg font-bold text-white tracking-tight">TechTitan</h4>
+                    <Link href="/seller/1" className="hover:text-cyber-cyan transition-colors">
+                      <h4 className="text-lg font-bold text-white tracking-tight">TechTitan</h4>
+                    </Link>
                     <CheckCircle className="w-4 h-4 text-cyber-green" />
                   </div>
                   <div className="bg-cyber-green/10 px-2 py-0.5 rounded text-[8px] font-black text-cyber-green uppercase tracking-widest inline-block border border-cyber-green/20">Verified Seller</div>
@@ -182,7 +191,9 @@ export default function ProductDetail() {
                   <span className="text-xl font-black text-white">12m</span>
                 </div>
               </div>
-              <button className="w-full text-[10px] font-black text-cyber-cyan hover:text-white transition-colors uppercase tracking-[0.3em] text-center bg-white/2 py-3 rounded-xl border border-white/5 hover:bg-cyber-cyan/10">View Storefront</button>
+              <Link href="/seller/1" className="block w-full">
+                <button className="w-full text-[10px] font-black text-cyber-cyan hover:text-white transition-colors uppercase tracking-[0.3em] text-center bg-white/2 py-3 rounded-xl border border-white/5 hover:bg-cyber-cyan/10">View Storefront</button>
+              </Link>
             </div>
           </motion.div>
         </div>

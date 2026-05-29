@@ -7,6 +7,15 @@ import { motion } from 'framer-motion';
 export default function SearchPage() {
   const categories = ['All Categories', 'Software', 'Accounts', 'Graphics', 'Scripts', 'Services'];
 
+  const products = [
+    { id: '1', title: 'Premium SEO Master Toolset v4.2', price: 89.99, category: 'Software', seller: 'TechTitan', isVerified: true, rating: 4.9 },
+    { id: '2', title: 'Aged Twitter Account (2012) - High Followers', price: 150.00, category: 'Accounts', seller: 'SocialKing', isVerified: true, rating: 4.8 },
+    { id: '3', title: 'Full Stack React SaaS Boilerplate', price: 49.00, category: 'Scripts', seller: 'CodeMaster', isVerified: false, rating: 4.5 },
+    { id: '4', title: 'Adobe Creative Cloud 1Y Subscription', price: 120.00, category: 'Accounts', seller: 'CloudDealer', isVerified: true, rating: 5.0 },
+    { id: '5', title: 'Exclusive 4K Video LUTs Pack', price: 25.00, category: 'Graphics', seller: 'VisualsHub', isVerified: false, rating: 4.2 },
+    { id: '6', title: 'High Authority Backlink Service (50 Sites)', price: 199.99, category: 'Services', seller: 'SEOGuru', isVerified: true, rating: 4.9 },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -100,16 +109,9 @@ export default function SearchPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {[
-            { title: 'Premium SEO Master Toolset v4.2', price: 89.99, category: 'Software', seller: 'TechTitan', isVerified: true, rating: 4.9 },
-            { title: 'Aged Twitter Account (2012) - High Followers', price: 150.00, category: 'Accounts', seller: 'SocialKing', isVerified: true, rating: 4.8 },
-            { title: 'Full Stack React SaaS Boilerplate', price: 49.00, category: 'Scripts', seller: 'CodeMaster', isVerified: false, rating: 4.5 },
-            { title: 'Adobe Creative Cloud 1Y Subscription', price: 120.00, category: 'Accounts', seller: 'CloudDealer', isVerified: true, rating: 5.0 },
-            { title: 'Exclusive 4K Video LUTs Pack', price: 25.00, category: 'Graphics', seller: 'VisualsHub', isVerified: false, rating: 4.2 },
-            { title: 'High Authority Backlink Service (50 Sites)', price: 199.99, category: 'Services', seller: 'SEOGuru', isVerified: true, rating: 4.9 },
-          ].map((product, i) => (
+          {products.map((product, i) => (
             <motion.div
-              key={i}
+              key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i + 0.4 }}

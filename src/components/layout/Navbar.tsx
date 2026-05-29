@@ -1,10 +1,13 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, ShieldCheck, Menu } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Search, ShieldCheck, Menu, LayoutDashboard, Settings, LogOut } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 w-full px-4 py-6">
       <motion.div
@@ -33,16 +36,46 @@ const Navbar = () => {
               placeholder="Search premium assets..."
               className="w-full bg-black/40 border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-cyber-cyan/50 transition-all placeholder:text-gray-600"
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden group-focus-within:flex items-center gap-1">
-               <kbd className="bg-white/5 border border-white/10 px-1.5 py-0.5 rounded text-[10px] text-gray-500">ESC</kbd>
-            </div>
           </div>
         </div>
 
         <div className="flex items-center gap-4 md:gap-8">
           <div className="hidden md:flex items-center gap-6">
             <Link href="/search" className="text-sm font-black text-gray-400 hover:text-white transition-colors uppercase tracking-widest">Market</Link>
-            <Link href="/login" className="text-sm font-black text-gray-400 hover:text-white transition-colors uppercase tracking-widest">Login</Link>
+
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2 text-sm font-black text-gray-400 hover:text-white transition-colors uppercase tracking-widest"
+              >
+                Dashboard <Menu className="w-4 h-4" />
+              </button>
+
+              <AnimatePresence>
+                {isUserMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full right-0 mt-4 w-56 glass-morphism rounded-2xl border border-white/10 p-2 shadow-2xl backdrop-blur-2xl"
+                  >
+                    <Link href="/dashboard/buyer" className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-xs font-bold text-gray-300 hover:text-white">
+                      <LayoutDashboard className="w-4 h-4 text-cyber-cyan" /> Buyer Panel
+                    </Link>
+                    <Link href="/dashboard/seller" className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-xs font-bold text-gray-300 hover:text-white">
+                      <ShieldCheck className="w-4 h-4 text-cyber-green" /> Seller Panel
+                    </Link>
+                    <Link href="/admin/moderation" className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-xs font-bold text-gray-300 hover:text-white">
+                      <Settings className="w-4 h-4 text-cyber-purple" /> Admin Panel
+                    </Link>
+                    <div className="h-px bg-white/5 my-2 mx-2" />
+                    <Link href="/login" className="flex items-center gap-3 p-3 rounded-xl hover:bg-cyber-red/10 transition-colors text-xs font-bold text-cyber-red">
+                      <LogOut className="w-4 h-4" /> Sign Out
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -53,10 +86,6 @@ const Navbar = () => {
               Join Now
             </Link>
           </motion.div>
-
-          <button className="lg:hidden p-2 text-gray-400">
-             <Menu className="w-6 h-6" />
-          </button>
         </div>
       </motion.div>
     </nav>

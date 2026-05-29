@@ -2,6 +2,7 @@
 import React from 'react';
 import { ShoppingBag, Wallet, Clock, AlertCircle, Zap, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function BuyerDashboard() {
   return (
@@ -139,18 +140,22 @@ export default function BuyerDashboard() {
                           {order.status}
                         </div>
                       </div>
-                      <h4 className="font-bold text-white text-xl group-hover:text-cyber-cyan transition-colors">{order.name}</h4>
+                      <Link href="/product/1">
+                        <h4 className="font-bold text-white text-xl group-hover:text-cyber-cyan transition-colors">{order.name}</h4>
+                      </Link>
                       <div className="flex items-center gap-3 text-xs text-gray-500 font-medium">
-                        <span>Seller: <span className="text-gray-300 font-bold">{order.seller}</span></span>
+                        <span>Seller: <Link href="/seller/1" className="text-gray-300 font-bold hover:text-white transition-colors">{order.seller}</Link></span>
                         <span className="w-1 h-1 rounded-full bg-gray-700" />
                         <span>Price: <span className="text-white font-black">${order.price}</span></span>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button className="flex-1 md:flex-none bg-white/5 hover:bg-white/10 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all border border-white/5">
-                      View Details
-                    </button>
+                    <Link href="/product/1">
+                      <button className="flex-1 md:flex-none bg-white/5 hover:bg-white/10 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all border border-white/5">
+                        View Details
+                      </button>
+                    </Link>
                     {order.status === 'Awaiting Confirmation' ? (
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -159,9 +164,11 @@ export default function BuyerDashboard() {
                         Confirm Delivery
                       </motion.button>
                     ) : (
-                      <button className="flex-1 md:flex-none bg-cyber-cyan/10 text-cyber-cyan px-6 py-3 rounded-xl text-xs font-black border border-cyber-cyan/20 hover:bg-cyber-cyan hover:text-white transition-all">
-                        Chat with Seller
-                      </button>
+                      <Link href="/chat/1">
+                        <button className="flex-1 md:flex-none bg-cyber-cyan/10 text-cyber-cyan px-6 py-3 rounded-xl text-xs font-black border border-cyber-cyan/20 hover:bg-cyber-cyan hover:text-white transition-all">
+                          Chat with Seller
+                        </button>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -181,10 +188,12 @@ export default function BuyerDashboard() {
             <div className="space-y-1">
               <h4 className="text-sm font-bold text-white uppercase tracking-wide">Need help with an order?</h4>
               <p className="text-xs text-gray-500 font-medium leading-relaxed">
-                If you haven&apos;t received your product within the estimated time, you can open a dispute.
+                If you haven&apos;t received your product within the estimated time, you can open a <Link href="/dispute/1" className="text-cyber-amber font-bold underline">dispute</Link>.
                 Our team usually resolves disputes within <span className="text-cyber-amber font-bold">15 minutes</span>.
               </p>
-              <button className="text-[10px] font-black text-cyber-amber uppercase tracking-[0.2em] pt-3 hover:text-white transition-colors">Open a Support Ticket &rarr;</button>
+              <Link href="/chat/1">
+                <button className="text-[10px] font-black text-cyber-amber uppercase tracking-[0.2em] pt-3 hover:text-white transition-colors">Open a Support Ticket &rarr;</button>
+              </Link>
             </div>
           </motion.div>
         </div>
